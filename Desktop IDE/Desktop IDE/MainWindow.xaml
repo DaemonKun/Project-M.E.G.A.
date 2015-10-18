@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="M.E.G.A. - Desktop IDE" Height="350" Width="526" ResizeMode="NoResize">
     <Grid>
-        <Button Content="Create Questions" Margin="206,230,206,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

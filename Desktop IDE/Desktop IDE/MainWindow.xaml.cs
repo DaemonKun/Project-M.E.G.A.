@@ -23,6 +23,25 @@ namespace Desktop_IDE
         public MainWindow()
         {
             InitializeComponent();
+            Switcher.menuSwitcher = this;
+            Switcher.Switch(new MainMenu());
+        }
+
+        public void Navigate(UserControl nextPage)
+        {
+            this.Content = nextPage;
+        }
+
+        public void Navigate(UserControl nextPage, object state)
+        {
+            this.Content = nextPage;
+            Switchable s = nextPage as Switchable;
+
+            if (s != null)
+                s.UtilizeState(state);
+            else
+                throw new ArgumentException("NextPage is not Switchable! "
+                  + nextPage.Name.ToString());
         }
     }
 }
