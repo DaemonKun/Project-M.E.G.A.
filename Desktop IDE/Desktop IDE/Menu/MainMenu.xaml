@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="350" d:DesignWidth="526">
+             d:DesignHeight="600" d:DesignWidth="1024">
     <Grid x:Name="MainMenuLayoutRoot" Background="White">
-        <Button Content="Create Questions" HorizontalAlignment="Left" Margin="382,211,0,0" VerticalAlignment="Top" Width="125" Height="33" Click="Button_Click"/>
+        <Button Content="Create Questions" HorizontalAlignment="Left"
+                Margin="864,315,0,0" VerticalAlignment="Top" Width="125" 
+                Height="33" Click="Button_Click"/>
 
     </Grid>
 </UserControl>

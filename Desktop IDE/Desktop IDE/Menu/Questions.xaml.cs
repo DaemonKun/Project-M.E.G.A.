@@ -35,6 +35,10 @@ namespace Desktop_IDE
             
             Switcher.Switch(new MainMenu());
         }
+        private void clickSend(object sender, RoutedEventArgs e)
+        {
+            MEGAhotspot.hotspot("MEGA", "x8743k0J", true);
+        }
         
         #region Switchable Members
         public void UtilizeState(object state)
@@ -42,5 +46,7 @@ namespace Desktop_IDE
             throw new NotImplementedException();
         }
         #endregion
+
+        
     }
 }
