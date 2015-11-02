@@ -1,31 +1,14 @@
-C:\Users\artwin\Documents\GitHub\Project-M.E.G.A\Project MEGA\Desktop IDE\bin\Debug\Desktop IDE.exe.config
-C:\Users\artwin\Documents\GitHub\Project-M.E.G.A\Desktop IDE\Desktop IDE\bin\Debug\Desktop IDE.exe.config
-C:\Users\artwin\Documents\GitHub\Project-M.E.G.A\Desktop IDE\Desktop IDE\bin\Debug\Desktop IDE.exe
-C:\Users\artwin\Documents\GitHub\Project-M.E.G.A\Desktop IDE\Desktop IDE\bin\Debug\Desktop IDE.pdb
-C:\Users\artwin\Documents\GitHub\Project-M.E.G.A\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.csprojResolveAssemblyReference.cache
-C:\Users\artwin\Documents\GitHub\Project-M.E.G.A\Desktop IDE\Desktop IDE\obj\Debug\MainWindow.baml
-C:\Users\artwin\Documents\GitHub\Project-M.E.G.A\Desktop IDE\Desktop IDE\obj\Debug\MainWindow.g.cs
-C:\Users\artwin\Documents\GitHub\Project-M.E.G.A\Desktop IDE\Desktop IDE\obj\Debug\App.g.cs
-C:\Users\artwin\Documents\GitHub\Project-M.E.G.A\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE_MarkupCompile.cache
-C:\Users\artwin\Documents\GitHub\Project-M.E.G.A\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.g.resources
-C:\Users\artwin\Documents\GitHub\Project-M.E.G.A\Desktop IDE\Desktop IDE\obj\Debug\Desktop_IDE.Properties.Resources.resources
-C:\Users\artwin\Documents\GitHub\Project-M.E.G.A\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.csproj.GenerateResource.Cache
-C:\Users\artwin\Documents\GitHub\Project-M.E.G.A\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.exe
-C:\Users\artwin\Documents\GitHub\Project-M.E.G.A\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.pdb
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\Desktop IDE.exe.config
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.exe
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.pdb
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.csprojResolveAssemblyReference.cache
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\App.g.cs
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE_MarkupCompile.cache
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.g.resources
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop_IDE.Properties.Resources.resources
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.csproj.GenerateResource.Cache
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\Desktop IDE.exe
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\Desktop IDE.pdb
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Menu\MainMenu.baml
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Menu\MainMenu.g.cs
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Menu\Questions.baml
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Menu\Questions.g.cs
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\MainWindow.baml
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\MainWindow.g.cs
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\MetroFramework.Design.dll
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\MetroFramework.dll
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\MetroFramework.Fonts.dll
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\MetroFramework.Design.pdb
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\MetroFramework.Fonts.pdb
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.csprojResolveAssemblyReference.cache
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop_IDE.Main.resources
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop_IDE.Properties.Resources.resources
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.csproj.GenerateResource.Cache
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.exe
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.pdb
