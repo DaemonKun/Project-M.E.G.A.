@@ -25,6 +25,7 @@ namespace Desktop_IDE
             newprocess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             InitializeComponent();
             this.StyleManager = msmMain;
+            tabMenu.SelectedTab = tabTitle;
         }
 
         #region Hotspot
@@ -126,19 +127,20 @@ namespace Desktop_IDE
         {
             if (chkTheme.Checked)
             {
-                tabMenu.Style = MetroFramework.MetroColorStyle.Blue;
                 msmMain.Theme = MetroFramework.MetroThemeStyle.Dark;
-                msmMain.Style = MetroFramework.MetroColorStyle.Black;
+                msmMain.Style = MetroFramework.MetroColorStyle.Green;
                 
             }
             else
             {
-                tabMenu.Style = MetroFramework.MetroColorStyle.Black;
+                msmMain.Style = MetroFramework.MetroColorStyle.Blue;
                 msmMain.Theme = MetroFramework.MetroThemeStyle.Light;
-                msmMain.Style = MetroFramework.MetroColorStyle.White;
+               
                 
             }
         }
+
+        
 
        
 
