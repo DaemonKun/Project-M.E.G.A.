@@ -35,14 +35,20 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MetroFramework">
-      <HintPath>..\..\..\..\..\..\..\build\AnyCpu\NET45\MetroFramework.dll</HintPath>
+    <Reference Include="MetroFramework, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>MetroUI\MetroFramework.dll</HintPath>
     </Reference>
-    <Reference Include="MetroFramework.Design">
-      <HintPath>..\..\..\..\..\..\..\build\AnyCpu\NET45\MetroFramework.Design.dll</HintPath>
+    <Reference Include="MetroFramework.Design, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>MetroUI\MetroFramework.Design.dll</HintPath>
     </Reference>
-    <Reference Include="MetroFramework.Fonts">
-      <HintPath>..\..\..\..\..\..\..\build\AnyCpu\NET45\MetroFramework.Fonts.dll</HintPath>
+    <Reference Include="MetroFramework.Fonts, Version=1.3.5.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>MetroUI\MetroFramework.Fonts.dll</HintPath>
+    </Reference>
+    <Reference Include="strData">
+      <HintPath>..\strData\bin\Debug\strData.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

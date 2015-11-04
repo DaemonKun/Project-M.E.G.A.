@@ -4,8 +4,8 @@ C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\MetroFramework.Design.dll
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\MetroFramework.dll
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\MetroFramework.Fonts.dll
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\MetroFramework.Design.pdb
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\MetroFramework.Fonts.pdb
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\strData.dll
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\strData.pdb
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.csprojResolveAssemblyReference.cache
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop_IDE.Main.resources
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop_IDE.Properties.Resources.resources
