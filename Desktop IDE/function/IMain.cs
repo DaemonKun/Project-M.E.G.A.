@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace strData
+﻿
+namespace function
 {
     public interface IMain
     {
@@ -13,11 +8,15 @@ namespace strData
         string AnswerB { get; set; }
         string AnswerC { get; set; }
         string AnswerD { get; set; }
+        string Hotspot { get; set; }
         int Index { get; set; }
+        int Count { get; }
         bool A { get; set; }
         bool B { get; set; }
         bool C { get; set; }
         bool D { get; set; }
+        bool StatusPrev { get; set; }
+        bool StatusNext { get; set; }
 
     }
 }

@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop IDE", "Desktop IDE\Desktop IDE.csproj", "{6485F282-BCAC-4388-883A-0A52A154DD6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "strData", "strData\strData.csproj", "{962798DA-A899-4904-B151-035CB8D2D2A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "function", "function\function.csproj", "{28D69886-11CB-48B9-9D88-DC3CBBD40AD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,13 +15,14 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6485F282-BCAC-4388-883A-0A52A154DD6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6485F282-BCAC-4388-883A-0A52A154DD6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6485F282-BCAC-4388-883A-0A52A154DD6D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{6485F282-BCAC-4388-883A-0A52A154DD6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6485F282-BCAC-4388-883A-0A52A154DD6D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6485F282-BCAC-4388-883A-0A52A154DD6D}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{962798DA-A899-4904-B151-035CB8D2D2A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{962798DA-A899-4904-B151-035CB8D2D2A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{962798DA-A899-4904-B151-035CB8D2D2A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{962798DA-A899-4904-B151-035CB8D2D2A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28D69886-11CB-48B9-9D88-DC3CBBD40AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28D69886-11CB-48B9-9D88-DC3CBBD40AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28D69886-11CB-48B9-9D88-DC3CBBD40AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28D69886-11CB-48B9-9D88-DC3CBBD40AD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

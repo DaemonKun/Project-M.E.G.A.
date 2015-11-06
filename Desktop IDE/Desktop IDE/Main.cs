@@ -8,127 +8,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
-using System.Diagnostics;
-using System.Security.Principal;
 using MetroFramework;
-using strData;
+using function;
 
 namespace Desktop_IDE
 {
     public partial class Main : MetroForm,IMain
     {
-        Process newprocess = new Process();
         
-
         public Main()
         {
-            //hotspot
-            newprocess.StartInfo.UseShellExecute = false;
-            newprocess.StartInfo.CreateNoWindow = true;
-            newprocess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            hotspot.initialize();
             InitializeComponent();
-            strData.strData.main = this;
+            strData.main = this; 
             this.StyleManager = msmMain;
             tabMenu.SelectedTab = tabQuestion;
             cbNumber.SelectedIndex = 0;
             butPrevious.Enabled = false;
                                             
         }
-
-        #region Hotspot
-        
-        public void Process_1()
-        {
-            pb.Value = 0;
-            pb.Increment(25);
-            newprocess.StartInfo.FileName = "netsh";
-            newprocess.StartInfo.Arguments = "wlan stop hostednetwork";
-            try
-            {
-                using(Process execute = Process.Start(newprocess.StartInfo))
-                {
-                    execute.WaitForExit();
-                    pb.Increment(25);
-                    Process_2();
-                }
-            }
-            catch
-            {
-                //Nothing
-            }
-        }
-        public void Process_2()
-        {
-            newprocess.StartInfo.FileName = "netsh";
-            newprocess.StartInfo.Arguments = "wlan set hostednetwork mode=allow ssid=MEGA key=x8743k0J";
-            try
-            {
-                using (Process execute = Process.Start(newprocess.StartInfo))
-                {
-                    execute.WaitForExit();
-                    pb.Increment(25);
-                    Process_3();
-
-                }
-            }
-            catch
-            {
-                //Nothing
-            }
-        }
-        public void Process_3()
-        {
-            newprocess.StartInfo.FileName = "netsh";
-            newprocess.StartInfo.Arguments = "wlan start hostednetwork";
-            try
-            {
-                using (Process execute = Process.Start(newprocess.StartInfo))
-                {
-                    execute.WaitForExit();
-                    pb.Increment(25);
-                    butHotspot.Text = "Stop Hotspot";
-                    
-                }
-            }
-            catch
-            {
-                //Nothing
-            }
-        }
-        public void Process_stop()
-        {
-            pb.Value = 0;
-            newprocess.StartInfo.FileName = "netsh";
-            newprocess.StartInfo.Arguments = "wlan stop hostednetwork";
-            try
-            {
-                pb.Increment(50);
-                using (Process execute = Process.Start(newprocess.StartInfo))
-                {
-                    execute.WaitForExit();
-                    pb.Increment(50);
-                    butHotspot.Text = "Start Hotspot";
-                    
-                }
-            }
-            catch
-            {
-                //Nothing
-            }
-        }
-        private void clickHotspot(object sender, EventArgs e)
-        {
-            if (butHotspot.Text == "Start Hotspot")
-            {
-                Process_1();
-            }
-            else if(butHotspot.Text == "Stop Hotspot")
-            {
-                Process_stop();
-            }
-                
-        }
-        #endregion
 
         private void checkTheme(object sender, EventArgs e)
         {
@@ -150,24 +48,9 @@ namespace Desktop_IDE
         private void changeNum(object sender, EventArgs e)
         {
             lblQuestion.Text = "Question " + cbNumber.SelectedItem;
-            strData.strData.dispAnswer();
-            strData.strData.dispQuestion();
-                
-            if (cbNumber.SelectedIndex == 0)
-            {
-                butPrevious.Enabled = false;
-                butNext.Enabled = true;
-            }
-            else if (cbNumber.SelectedIndex == (cbNumber.Items.Count - 1))
-            {
-                butNext.Enabled = false;
-                butPrevious.Enabled = true;
-            }
-            else
-            {
-                butPrevious.Enabled = true;
-                butNext.Enabled = true;
-            }
+            strData.dispAnswer();
+            strData.dispQuestion();
+            otherFunctions.enableDisablePrevNext();
         }
         
         #region Click Events
@@ -197,8 +80,8 @@ namespace Desktop_IDE
                 }
                 else
                 {
-                    strData.strData.getQuestion();
-                    strData.strData.getAnswer();
+                    strData.getQuestion();
+                    strData.getAnswer();
                     cbNumber.SelectedIndex += 1;
                 }
             }
@@ -217,7 +100,7 @@ namespace Desktop_IDE
             int prevIndex = cbNumber.SelectedIndex;
             int prevLastIndex = cbNumber.Items.Count - 1;
             int count = cbNumber.Items.Count;
-            if (count == 1)
+            if ( count== 1)
             {
                 butDelete.Enabled = false;
                 return;
@@ -233,6 +116,12 @@ namespace Desktop_IDE
             {
                 cbNumber.Items.Add(i);
             }
+            strData.strQuestion = strData.strQuestion.Where((s, i) => i != prevIndex).ToArray();
+            strData.strChoice = strData.strQuestion.Where((s, i) => i != prevIndex).ToArray();
+            strData.strAnswer[0] = strData.strAnswer[0].Where((s, i) => i != prevIndex).ToArray();
+            strData.strAnswer[1] = strData.strAnswer[1].Where((s, i) => i != prevIndex).ToArray();
+            strData.strAnswer[2] = strData.strAnswer[2].Where((s, i) => i != prevIndex).ToArray();
+            strData.strAnswer[3] = strData.strAnswer[3].Where((s, i) => i != prevIndex).ToArray();
             if ((prevIndex != 0) && (prevIndex != prevLastIndex))
                 cbNumber.SelectedIndex = prevIndex;
             else if (prevIndex == prevLastIndex)
@@ -248,8 +137,26 @@ namespace Desktop_IDE
             AnswerB = null;
             AnswerC = null;
             AnswerD = null;
-            strData.strData.getAnswer();
-            strData.strData.getQuestion();
+            strData.getAnswer();
+            strData.getQuestion();
+        }
+        private void clickHotspot(object sender, EventArgs e)
+        {
+            hotspot.startStop();
+        }
+        private void clickSave(object sender, EventArgs e)
+        {
+            if (otherFunctions.saveFile())
+                MetroMessageBox.Show(this, "File has been saved", "Saved",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
+        }
+        private void clickLoad(object sender, EventArgs e)
+        {
+            if(otherFunctions.openFile())
+                MetroMessageBox.Show(this, "File has been loaded", "Loaded",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
         }
         #endregion
 
@@ -279,10 +186,19 @@ namespace Desktop_IDE
             get { return txtD.Text; }
             set { txtD.Text = value; }
         }
+        public string Hotspot
+        {
+            get { return butHotspot.Text; }
+            set { butHotspot.Text = value; }
+        }
         public int Index
         {
             get { return cbNumber.SelectedIndex; }
             set { cbNumber.SelectedIndex = value; }
+        }
+        public int Count
+        {
+            get { return cbNumber.Items.Count; }
         }
         public bool A
         {
@@ -304,7 +220,21 @@ namespace Desktop_IDE
             get { return rbD.Checked; }
             set { rbD.Checked = value; }
         }
+        public bool StatusPrev
+        {
+            get { return butPrevious.Enabled; }
+            set { butPrevious.Enabled = value; }
+        }
+        public bool StatusNext
+        {
+            get { return butNext.Enabled; }
+            set { butNext.Enabled = value; }
+        }
         #endregion
+
+        
+
+        
 
         
 
