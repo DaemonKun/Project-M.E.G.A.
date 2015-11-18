@@ -1,6 +1,3 @@
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop_IDE.Main.resources
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop_IDE.Properties.Resources.resources
-C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.csproj.GenerateResource.Cache
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\Desktop IDE.exe.config
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\Desktop IDE.exe
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\Desktop IDE.pdb
@@ -10,5 +7,8 @@ C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\MetroFramework.Fonts.dll
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\bin\Debug\function.pdb
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.csprojResolveAssemblyReference.cache
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop_IDE.Main.resources
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop_IDE.Properties.Resources.resources
+C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.csproj.GenerateResource.Cache
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.exe
 C:\Users\artwin\Documents\GitHub\Project-MEGA\Desktop IDE\Desktop IDE\obj\Debug\Desktop IDE.pdb

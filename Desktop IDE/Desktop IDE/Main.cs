@@ -10,24 +10,29 @@ using System.Windows.Forms;
 using MetroFramework.Forms;
 using MetroFramework;
 using function;
+using System.Threading;
+using System.Net.Sockets;
+using System.Net;
 
 namespace Desktop_IDE
 {
     public partial class Main : MetroForm,IMain
     {
-        
+        private static bool ServerHasStartup = false;
         public Main()
         {
             hotspot.initialize();
             InitializeComponent();
+            cbNumber.SelectedIndex = 0;
             strData.main = this; 
             this.StyleManager = msmMain;
             tabMenu.SelectedTab = tabQuestion;
-            cbNumber.SelectedIndex = 0;
             butPrevious.Enabled = false;
-                                            
+            tcpserver.Server = this;
+            Thread startserver = new Thread(new ThreadStart(tcpserver.SetupServer));
+            startserver.IsBackground = true;
+            startserver.Start();            
         }
-
         private void checkTheme(object sender, EventArgs e)
         {
             if (chkTheme.Checked)
@@ -44,15 +49,32 @@ namespace Desktop_IDE
                 
             }
         }
-
         private void changeNum(object sender, EventArgs e)
         {
             lblQuestion.Text = "Question " + cbNumber.SelectedItem;
+            
             strData.dispAnswer();
             strData.dispQuestion();
             otherFunctions.enableDisablePrevNext();
         }
-        
+
+
+        public void AddClient(IPEndPoint IpEndPoint)
+        {
+            
+            if(lbxServer.Items.Contains(IpEndPoint.ToString()))
+            {
+                return;
+            }
+            else
+            {
+                lbxServer.BeginUpdate();
+                lbxServer.Items.Add(IpEndPoint.ToString());
+                lbxServer.EndUpdate();
+            }
+            
+        }
+
         #region Click Events
         private void clickPrevious(object sender, EventArgs e)
         {
@@ -147,20 +169,29 @@ namespace Desktop_IDE
         private void clickSave(object sender, EventArgs e)
         {
             if (otherFunctions.saveFile())
+            {
                 MetroMessageBox.Show(this, "File has been saved", "Saved",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-            
+                tbxFile.Text = otherFunctions.save.FileName;
+                
+            }
         }
         private void clickLoad(object sender, EventArgs e)
         {
-            if(otherFunctions.openFile())
+            if (otherFunctions.openFile())
+            {
                 MetroMessageBox.Show(this, "File has been loaded", "Loaded",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                tbxFile.Text = otherFunctions.open.FileName;
+                
+            }
             
         }
         #endregion
 
         #region DLL Variable Declarations
+
         public string Question
         {
             get { return txtQuestion.Text; }
@@ -191,10 +222,14 @@ namespace Desktop_IDE
             get { return butHotspot.Text; }
             set { butHotspot.Text = value; }
         }
+        public string Server
+        {
+            get { return butServer.Text; }
+            set { butServer.Text = value; }
+        }
         public int Index
         {
             get { return cbNumber.SelectedIndex; }
-            set { cbNumber.SelectedIndex = value; }
         }
         public int Count
         {
@@ -232,13 +267,10 @@ namespace Desktop_IDE
         }
         #endregion
 
-        
+
 
         
 
-        
-
-        
 
                         
     }

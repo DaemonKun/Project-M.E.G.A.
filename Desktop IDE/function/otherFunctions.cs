@@ -5,31 +5,40 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
+using System.Net.Sockets;
+using System.Net;
 
 namespace function
 {
     public static class otherFunctions
     {
-        private static IMain main = strData.main;
-        private static SaveFileDialog save = new SaveFileDialog();
-        private static OpenFileDialog open = new OpenFileDialog();
 
+        private static IMain main = strData.main;
+        public static OpenFileDialog open = new OpenFileDialog();
+        public static SaveFileDialog save = new SaveFileDialog();
         public static void enableDisablePrevNext()
         {
-            if (main.Index == 0)
+            try
             {
-                main.StatusPrev = false;
-                main.StatusNext = true;
+                if (main.Index == 0)
+                {
+                    main.StatusPrev = false;
+                    main.StatusNext = true;
+                }
+                else if (main.Index == (main.Count - 1))
+                {
+                    main.StatusNext = false;
+                    main.StatusPrev = true;
+                }
+                else
+                {
+                    main.StatusPrev = true;
+                    main.StatusNext = true;
+                }
             }
-            else if (main.Index == (main.Count - 1))
+            catch(NullReferenceException)
             {
-                main.StatusNext = false;
-                main.StatusPrev = true;
-            }
-            else
-            {
-                main.StatusPrev = true;
-                main.StatusNext = true;
+                return;
             }
         }
         public static bool openFile()
@@ -53,6 +62,7 @@ namespace function
         }
         public static bool saveFile()
         {
+            
             strData.getAnswer();
             strData.getQuestion();
             save.Filter = "MEGA questions|*.mgq";
@@ -105,7 +115,7 @@ namespace function
         public static void WriteQuestions(string filename)
         {
             StreamWriter sw = new StreamWriter(filename);
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < strData.strQuestion.Length; i++)
             {
                 if ((strData.strQuestion[i] != null) && (strData.strAnswer[0][i] != null)
                     && (strData.strChoice[i] != null) && (strData.strAnswer[1][i] != null)
@@ -124,11 +134,12 @@ namespace function
             }
             sw.Close();
         }
+
         public static void ReadTmpFile(string tmpfile)
         {
             string[] result = File.ReadAllLines(tmpfile);
             
-            for(int i = 0;i<50;i++)
+            for(int i = 0;i<strData.strQuestion.Length;i++)
             {
                 for(int j = 0;j<result.Length;j++)
                 {
@@ -170,5 +181,6 @@ namespace function
                 }
             }
         }
+        
     }
 }

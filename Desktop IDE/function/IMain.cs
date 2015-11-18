@@ -9,7 +9,8 @@ namespace function
         string AnswerC { get; set; }
         string AnswerD { get; set; }
         string Hotspot { get; set; }
-        int Index { get; set; }
+        string Server { get; set; }
+        int Index { get; }
         int Count { get; }
         bool A { get; set; }
         bool B { get; set; }
