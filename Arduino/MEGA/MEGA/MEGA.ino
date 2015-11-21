@@ -31,8 +31,8 @@ Adafruit_CC3000 cc3000 = Adafruit_CC3000(ADAFRUIT_CC3000_CS, ADAFRUIT_CC3000_IRQ
 Adafruit_CC3000_Client client;
 #pragma endregion
 #pragma region UTFT_define
-UTFT LCD(SSD1963_480,38,39,40,41);
-UTouch touch(48,47,46,45,44);
+UTFT LCD(SSD1963_480, 38, 39, 40, 41);
+UTouch touch(48, 47, 46, 45, 44);
 extern uint8_t SmallFont[];
 int texty_center, dispx,dispy,prevY;
 UTFT_Buttons buttons(&LCD,&touch);
@@ -167,20 +167,43 @@ void Question(){
   LCD.setBackColor(VGA_BLUE);
 
   File questionFile;
-  String question;
-  String answer[4];
-  bool isFinish = false;
+  int Limit = 1;
+  String LimitStr = String(Limit);
   questionFile = SD.open("example.mgq",FILE_READ);
-  while(questionFile.available()){
-    
+  String readLimit = questionFile.readStringUntil('\n');
+  Serial.println(readLimit);
+  while(LimitStr!=readLimit){
+	  Serial.println(LimitStr);
+	  Limit++;
+	  LimitStr = String(Limit);
   }
-  
-  /*do
-  {
-    
+  Serial.println("Got Max");
+  for (int i = 1; i <= Limit; i++){
+	  dispQuestion(i, questionFile);
   }
-  while(!isFinish);
-*/
-  
 }
-
+void dispQuestion(int i, File file){
+	String Question;
+	String Answer[5];
+	String lim = "<" + String(i) + ">";
+	char* current;
+	lim.toCharArray(current, lim.length() + 1);
+	while (file.available()){
+		if (file.find(current)){
+			Question = file.readStringUntil('\n');
+			for (int j = 0; j < 4; j++){
+				Answer[j] = file.readStringUntil('\n');
+			}
+			break;
+		}
+	}
+	Serial.println(lim);
+	Question.remove(0, 7);
+	for (int j = 0; j < 4; j++){
+		Answer[j].remove(0, 7);
+	}
+	Serial.println(Question);
+	for (int j = 0; j < 4; j++){
+		Serial.println(Answer[j]);
+	}
+}

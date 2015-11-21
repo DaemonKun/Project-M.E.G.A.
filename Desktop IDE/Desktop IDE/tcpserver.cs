@@ -104,7 +104,7 @@ namespace Desktop_IDE
                         temp += strData.strAnswer[j][i] + "\n";
                     }
                 }
-                response = "Max:" + i.ToString() + "\n" + temp;
+                response = i.ToString() + "\n" + temp;
 #endregion
 
                 

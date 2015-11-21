@@ -23,8 +23,8 @@ namespace Desktop_IDE
         {
             hotspot.initialize();
             InitializeComponent();
+            strData.main = this;
             cbNumber.SelectedIndex = 0;
-            strData.main = this; 
             this.StyleManager = msmMain;
             tabMenu.SelectedTab = tabQuestion;
             butPrevious.Enabled = false;
