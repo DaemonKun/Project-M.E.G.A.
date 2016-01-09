@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Security.Cryptography;
 
-namespace function
+namespace Desktop_IDE
 {
-    public static class Crpyt
+    static class Crpyt
     {
         private static IMain main = strData.main;
         private static string password = "dasdsdsadwdsdscx";

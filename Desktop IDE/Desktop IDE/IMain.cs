@@ -1,5 +1,5 @@
 ﻿
-namespace function
+namespace Desktop_IDE
 {
     public interface IMain
     {
@@ -18,6 +18,8 @@ namespace function
         bool D { get; set; }
         bool StatusPrev { get; set; }
         bool StatusNext { get; set; }
+        int MAX { get; set; }
+        
 
     }
 }

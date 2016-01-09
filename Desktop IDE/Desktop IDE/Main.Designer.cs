@@ -29,11 +29,21 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.msmMain = new MetroFramework.Components.MetroStyleManager(this.components);
             this.chkTheme = new MetroFramework.Controls.MetroCheckBox();
             this.tabMenu = new MetroFramework.Controls.MetroTabControl();
             this.tabUser = new MetroFramework.Controls.MetroTabPage();
-            this.butSend = new MetroFramework.Controls.MetroButton();
+            this.butCreate = new MetroFramework.Controls.MetroButton();
+            this.butLoadTest = new MetroFramework.Controls.MetroButton();
+            this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
+            this.mpUser = new MetroFramework.Controls.MetroPanel();
+            this.lblId = new MetroFramework.Controls.MetroLabel();
+            this.lblExam = new MetroFramework.Controls.MetroLabel();
+            this.lblSubject = new MetroFramework.Controls.MetroLabel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lblUser = new MetroFramework.Controls.MetroLabel();
+            this.lblFinish = new MetroFramework.Controls.MetroLabel();
             this.lbxServer = new System.Windows.Forms.ListBox();
             this.tbxFile = new MetroFramework.Controls.MetroTextBox();
             this.tabQuestion = new MetroFramework.Controls.MetroTabPage();
@@ -58,11 +68,14 @@
             this.cbNumber = new MetroFramework.Controls.MetroComboBox();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.tabUdb = new MetroFramework.Controls.MetroTabPage();
+            this.tabRegister = new MetroFramework.Controls.MetroTabPage();
             this.butHotspot = new MetroFramework.Controls.MetroButton();
             this.butServer = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.msmMain)).BeginInit();
             this.tabMenu.SuspendLayout();
             this.tabUser.SuspendLayout();
+            this.mpUser.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabQuestion.SuspendLayout();
             this.panelQuestion.SuspendLayout();
             this.SuspendLayout();
@@ -91,16 +104,20 @@
             this.tabMenu.Controls.Add(this.tabUser);
             this.tabMenu.Controls.Add(this.tabQuestion);
             this.tabMenu.Controls.Add(this.tabUdb);
+            this.tabMenu.Controls.Add(this.tabRegister);
             this.tabMenu.Location = new System.Drawing.Point(23, 55);
             this.tabMenu.Name = "tabMenu";
-            this.tabMenu.SelectedIndex = 0;
+            this.tabMenu.SelectedIndex = 1;
             this.tabMenu.Size = new System.Drawing.Size(696, 339);
             this.tabMenu.TabIndex = 1;
             this.tabMenu.UseSelectable = true;
             // 
             // tabUser
             // 
-            this.tabUser.Controls.Add(this.butSend);
+            this.tabUser.Controls.Add(this.butCreate);
+            this.tabUser.Controls.Add(this.butLoadTest);
+            this.tabUser.Controls.Add(this.metroLabel5);
+            this.tabUser.Controls.Add(this.mpUser);
             this.tabUser.Controls.Add(this.lbxServer);
             this.tabUser.Controls.Add(this.tbxFile);
             this.tabUser.HorizontalScrollbarBarColor = true;
@@ -115,14 +132,110 @@
             this.tabUser.VerticalScrollbarHighlightOnWheel = false;
             this.tabUser.VerticalScrollbarSize = 10;
             // 
-            // butSend
+            // butCreate
             // 
-            this.butSend.Location = new System.Drawing.Point(473, 15);
-            this.butSend.Name = "butSend";
-            this.butSend.Size = new System.Drawing.Size(117, 23);
-            this.butSend.TabIndex = 5;
-            this.butSend.Text = "Send";
-            this.butSend.UseSelectable = true;
+            this.butCreate.Location = new System.Drawing.Point(585, 21);
+            this.butCreate.Name = "butCreate";
+            this.butCreate.Size = new System.Drawing.Size(100, 23);
+            this.butCreate.TabIndex = 8;
+            this.butCreate.Text = "Create Test File";
+            this.butCreate.UseSelectable = true;
+            this.butCreate.Click += new System.EventHandler(this.clickCreate);
+            // 
+            // butLoadTest
+            // 
+            this.butLoadTest.Location = new System.Drawing.Point(473, 21);
+            this.butLoadTest.Name = "butLoadTest";
+            this.butLoadTest.Size = new System.Drawing.Size(87, 23);
+            this.butLoadTest.TabIndex = 7;
+            this.butLoadTest.Text = "Load Test File";
+            this.butLoadTest.UseSelectable = true;
+            this.butLoadTest.Click += new System.EventHandler(this.butLoadTest_Click);
+            // 
+            // metroLabel5
+            // 
+            this.metroLabel5.AutoSize = true;
+            this.metroLabel5.Location = new System.Drawing.Point(3, 25);
+            this.metroLabel5.Name = "metroLabel5";
+            this.metroLabel5.Size = new System.Drawing.Size(57, 19);
+            this.metroLabel5.TabIndex = 6;
+            this.metroLabel5.Text = "Test File:";
+            // 
+            // mpUser
+            // 
+            this.mpUser.BackColor = System.Drawing.Color.Transparent;
+            this.mpUser.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mpUser.Controls.Add(this.lblId);
+            this.mpUser.Controls.Add(this.lblExam);
+            this.mpUser.Controls.Add(this.lblSubject);
+            this.mpUser.Controls.Add(this.pictureBox1);
+            this.mpUser.Controls.Add(this.lblUser);
+            this.mpUser.Controls.Add(this.lblFinish);
+            this.mpUser.HorizontalScrollbarBarColor = true;
+            this.mpUser.HorizontalScrollbarHighlightOnWheel = false;
+            this.mpUser.HorizontalScrollbarSize = 10;
+            this.mpUser.Location = new System.Drawing.Point(328, 50);
+            this.mpUser.Name = "mpUser";
+            this.mpUser.Size = new System.Drawing.Size(359, 225);
+            this.mpUser.TabIndex = 5;
+            this.mpUser.VerticalScrollbarBarColor = true;
+            this.mpUser.VerticalScrollbarHighlightOnWheel = false;
+            this.mpUser.VerticalScrollbarSize = 10;
+            // 
+            // lblId
+            // 
+            this.lblId.AutoSize = true;
+            this.lblId.Location = new System.Drawing.Point(3, 25);
+            this.lblId.Name = "lblId";
+            this.lblId.Size = new System.Drawing.Size(75, 19);
+            this.lblId.TabIndex = 9;
+            this.lblId.Text = "ID number:";
+            // 
+            // lblExam
+            // 
+            this.lblExam.AutoSize = true;
+            this.lblExam.Location = new System.Drawing.Point(3, 121);
+            this.lblExam.Name = "lblExam";
+            this.lblExam.Size = new System.Drawing.Size(48, 19);
+            this.lblExam.TabIndex = 8;
+            this.lblExam.Text = "Exam :";
+            // 
+            // lblSubject
+            // 
+            this.lblSubject.AutoSize = true;
+            this.lblSubject.Location = new System.Drawing.Point(3, 87);
+            this.lblSubject.Name = "lblSubject";
+            this.lblSubject.Size = new System.Drawing.Size(54, 19);
+            this.lblSubject.TabIndex = 7;
+            this.lblSubject.Text = "Subject:";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(76, 181);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            // 
+            // lblUser
+            // 
+            this.lblUser.AutoSize = true;
+            this.lblUser.Location = new System.Drawing.Point(3, 55);
+            this.lblUser.Name = "lblUser";
+            this.lblUser.Size = new System.Drawing.Size(43, 19);
+            this.lblUser.TabIndex = 4;
+            this.lblUser.Text = "User: ";
+            // 
+            // lblFinish
+            // 
+            this.lblFinish.AutoSize = true;
+            this.lblFinish.Location = new System.Drawing.Point(98, 181);
+            this.lblFinish.Name = "lblFinish";
+            this.lblFinish.Size = new System.Drawing.Size(93, 19);
+            this.lblFinish.TabIndex = 2;
+            this.lblFinish.Text = "Still Answering";
             // 
             // lbxServer
             // 
@@ -131,6 +244,7 @@
             this.lbxServer.Name = "lbxServer";
             this.lbxServer.Size = new System.Drawing.Size(302, 225);
             this.lbxServer.TabIndex = 4;
+            this.lbxServer.SelectedIndexChanged += new System.EventHandler(this.selectClient);
             // 
             // tbxFile
             // 
@@ -138,7 +252,7 @@
             // 
             // 
             this.tbxFile.CustomButton.Image = null;
-            this.tbxFile.CustomButton.Location = new System.Drawing.Point(280, 1);
+            this.tbxFile.CustomButton.Location = new System.Drawing.Point(358, 1);
             this.tbxFile.CustomButton.Name = "";
             this.tbxFile.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.tbxFile.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -148,7 +262,7 @@
             this.tbxFile.CustomButton.Visible = false;
             this.tbxFile.Enabled = false;
             this.tbxFile.Lines = new string[0];
-            this.tbxFile.Location = new System.Drawing.Point(3, 15);
+            this.tbxFile.Location = new System.Drawing.Point(77, 21);
             this.tbxFile.MaxLength = 32767;
             this.tbxFile.Name = "tbxFile";
             this.tbxFile.PasswordChar = '\0';
@@ -156,7 +270,7 @@
             this.tbxFile.SelectedText = "";
             this.tbxFile.SelectionLength = 0;
             this.tbxFile.SelectionStart = 0;
-            this.tbxFile.Size = new System.Drawing.Size(302, 23);
+            this.tbxFile.Size = new System.Drawing.Size(380, 23);
             this.tbxFile.TabIndex = 3;
             this.tbxFile.UseSelectable = true;
             this.tbxFile.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
@@ -446,7 +560,7 @@
             this.txtQuestion.FontSize = MetroFramework.MetroTextBoxSize.Tall;
             this.txtQuestion.Lines = new string[0];
             this.txtQuestion.Location = new System.Drawing.Point(0, 30);
-            this.txtQuestion.MaxLength = 32767;
+            this.txtQuestion.MaxLength = 295;
             this.txtQuestion.Multiline = true;
             this.txtQuestion.Name = "txtQuestion";
             this.txtQuestion.PasswordChar = '\0';
@@ -494,6 +608,7 @@
             // cbNumber
             // 
             this.cbNumber.FormattingEnabled = true;
+            this.cbNumber.IntegralHeight = false;
             this.cbNumber.ItemHeight = 23;
             this.cbNumber.Items.AddRange(new object[] {
             "1",
@@ -536,6 +651,20 @@
             this.tabUdb.VerticalScrollbarHighlightOnWheel = false;
             this.tabUdb.VerticalScrollbarSize = 10;
             // 
+            // tabRegister
+            // 
+            this.tabRegister.HorizontalScrollbarBarColor = true;
+            this.tabRegister.HorizontalScrollbarHighlightOnWheel = false;
+            this.tabRegister.HorizontalScrollbarSize = 10;
+            this.tabRegister.Location = new System.Drawing.Point(4, 38);
+            this.tabRegister.Name = "tabRegister";
+            this.tabRegister.Size = new System.Drawing.Size(688, 297);
+            this.tabRegister.TabIndex = 3;
+            this.tabRegister.Text = "Register Login Data";
+            this.tabRegister.VerticalScrollbarBarColor = true;
+            this.tabRegister.VerticalScrollbarHighlightOnWheel = false;
+            this.tabRegister.VerticalScrollbarSize = 10;
+            // 
             // butHotspot
             // 
             this.butHotspot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -558,6 +687,7 @@
             this.butServer.TabIndex = 4;
             this.butServer.Text = "Start Server";
             this.butServer.UseSelectable = true;
+            this.butServer.Click += new System.EventHandler(this.clickServer);
             // 
             // Main
             // 
@@ -566,16 +696,22 @@
             this.ClientSize = new System.Drawing.Size(742, 442);
             this.Controls.Add(this.butServer);
             this.Controls.Add(this.butHotspot);
-            this.Controls.Add(this.tabMenu);
             this.Controls.Add(this.chkTheme);
+            this.Controls.Add(this.tabMenu);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Main";
             this.Resizable = false;
             this.Style = MetroFramework.MetroColorStyle.Default;
             this.Text = "Project M.E.G.A.";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.atClose);
             ((System.ComponentModel.ISupportInitialize)(this.msmMain)).EndInit();
             this.tabMenu.ResumeLayout(false);
             this.tabUser.ResumeLayout(false);
+            this.tabUser.PerformLayout();
+            this.mpUser.ResumeLayout(false);
+            this.mpUser.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabQuestion.ResumeLayout(false);
             this.tabQuestion.PerformLayout();
             this.panelQuestion.ResumeLayout(false);
@@ -587,9 +723,7 @@
 
         #endregion
 
-        private MetroFramework.Components.MetroStyleManager msmMain;
         private MetroFramework.Controls.MetroCheckBox chkTheme;
-        private MetroFramework.Controls.MetroTabControl tabMenu;
         private MetroFramework.Controls.MetroButton butHotspot;
         private MetroFramework.Controls.MetroTabPage tabUser;
         private MetroFramework.Controls.MetroTabPage tabQuestion;
@@ -598,7 +732,6 @@
         private MetroFramework.Controls.MetroButton butSave;
         private MetroFramework.Controls.MetroButton butLoad;
         private MetroFramework.Controls.MetroButton butAdd;
-        private MetroFramework.Controls.MetroComboBox cbNumber;
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroButton butNext;
         private MetroFramework.Controls.MetroButton butPrevious;
@@ -616,8 +749,21 @@
         private MetroFramework.Controls.MetroTextBox txtA;
         private MetroFramework.Controls.MetroTextBox txtQuestion;
         private MetroFramework.Controls.MetroTextBox tbxFile;
-        private MetroFramework.Controls.MetroButton butSend;
         private System.Windows.Forms.ListBox lbxServer;
+        public MetroFramework.Controls.MetroTabControl tabMenu;
+        public MetroFramework.Controls.MetroTabPage tabRegister;
+        public MetroFramework.Controls.MetroComboBox cbNumber;
+        private MetroFramework.Controls.MetroPanel mpUser;
+        private MetroFramework.Controls.MetroLabel lblUser;
+        private MetroFramework.Controls.MetroLabel lblFinish;
+        private MetroFramework.Controls.MetroLabel lblExam;
+        private MetroFramework.Controls.MetroLabel lblSubject;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private MetroFramework.Controls.MetroLabel metroLabel5;
+        private MetroFramework.Controls.MetroLabel lblId;
+        private MetroFramework.Controls.MetroButton butLoadTest;
+        private MetroFramework.Controls.MetroButton butCreate;
+        public MetroFramework.Components.MetroStyleManager msmMain;
     }
 }
 

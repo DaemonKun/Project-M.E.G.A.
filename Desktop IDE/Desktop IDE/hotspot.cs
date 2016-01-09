@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace function
+namespace Desktop_IDE
 {
     public static class hotspot
     {
         private static Process newprocess = new Process();
-        
-        private static IMain main = strData.main;
+
+        public static IMain main;
         
         public static void initialize()
         {
@@ -96,6 +96,10 @@ namespace function
                 start();
             else if (main.Hotspot.Equals("Stop Hotspot"))
                 stop();
+        }
+        public static void exit()
+        {
+            stop();
         }
     }
 }

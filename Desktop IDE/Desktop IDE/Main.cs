@@ -9,29 +9,40 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using MetroFramework;
-using function;
+
 using System.Threading;
 using System.Net.Sockets;
 using System.Net;
+using MetroFramework.Controls;
+using MySql.Data.MySqlClient;
 
 namespace Desktop_IDE
 {
-    public partial class Main : MetroForm,IMain
+    public partial class Main : MetroForm, IMain
     {
-        private static bool ServerHasStartup = false;
+        public static Thread startserver;
+        private static int Max;
+
+
+
+
         public Main()
         {
+            startserver = new Thread(tcpserver.SetupServer);
             hotspot.initialize();
+            strData.initialize();
             InitializeComponent();
+            hotspot.main = this;
             strData.main = this;
+            tcpserver.main = this;
+            tcpserver.Server = this;
             cbNumber.SelectedIndex = 0;
             this.StyleManager = msmMain;
-            tabMenu.SelectedTab = tabQuestion;
+            tabMenu.SelectedTab = tabUser;
             butPrevious.Enabled = false;
-            tcpserver.Server = this;
-            Thread startserver = new Thread(new ThreadStart(tcpserver.SetupServer));
-            startserver.IsBackground = true;
-            startserver.Start();            
+            tcpserver.file = this.tbxFile.Text;
+
+
         }
         private void checkTheme(object sender, EventArgs e)
         {
@@ -39,30 +50,28 @@ namespace Desktop_IDE
             {
                 msmMain.Theme = MetroFramework.MetroThemeStyle.Dark;
                 msmMain.Style = MetroFramework.MetroColorStyle.Green;
-                
+
             }
             else
             {
                 msmMain.Style = MetroFramework.MetroColorStyle.Blue;
                 msmMain.Theme = MetroFramework.MetroThemeStyle.Light;
-               
-                
+
             }
         }
         private void changeNum(object sender, EventArgs e)
         {
             lblQuestion.Text = "Question " + cbNumber.SelectedItem;
-            
+
             strData.dispAnswer();
             strData.dispQuestion();
             otherFunctions.enableDisablePrevNext();
         }
 
-
         public void AddClient(IPEndPoint IpEndPoint)
         {
-            
-            if(lbxServer.Items.Contains(IpEndPoint.ToString()))
+
+            if (lbxServer.Items.Contains(IpEndPoint.ToString()))
             {
                 return;
             }
@@ -72,10 +81,15 @@ namespace Desktop_IDE
                 lbxServer.Items.Add(IpEndPoint.ToString());
                 lbxServer.EndUpdate();
             }
-            
+
         }
 
         #region Click Events
+        private void clickLogin(object sender, EventArgs e)
+        {
+
+        }
+
         private void clickPrevious(object sender, EventArgs e)
         {
             try
@@ -86,17 +100,17 @@ namespace Desktop_IDE
             {
                 MetroMessageBox.Show(this, ex.Message);
             }
-            
+
         }
         private void clickNext(object sender, EventArgs e)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(Question) || string.IsNullOrWhiteSpace(AnswerA) || 
-                    string.IsNullOrWhiteSpace(AnswerB) || string.IsNullOrWhiteSpace(AnswerC) || 
+                if (string.IsNullOrWhiteSpace(Question) || string.IsNullOrWhiteSpace(AnswerA) ||
+                    string.IsNullOrWhiteSpace(AnswerB) || string.IsNullOrWhiteSpace(AnswerC) ||
                     string.IsNullOrWhiteSpace(AnswerD))
                 {
-                    MetroMessageBox.Show(this, "You must fill the fields before pressing next", "Error", 
+                    MetroMessageBox.Show(this, "You must fill the fields before pressing next", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -115,18 +129,23 @@ namespace Desktop_IDE
         }
         private void clickAdd(object sender, EventArgs e)
         {
+            int count = cbNumber.Items.Count;
             cbNumber.Items.Add(cbNumber.Items.Count + 1);
+            if (count == cbNumber.SelectedIndex + 1)
+            {
+                cbNumber.SelectedIndex = cbNumber.Items.Count - 1;
+            }
         }
         private void clickDelete(object sender, EventArgs e)
         {
             int prevIndex = cbNumber.SelectedIndex;
             int prevLastIndex = cbNumber.Items.Count - 1;
             int count = cbNumber.Items.Count;
-            if ( count== 1)
+            if (count == 1)
             {
                 butDelete.Enabled = false;
                 return;
-                
+
             }
             else
             {
@@ -134,12 +153,12 @@ namespace Desktop_IDE
             }
 
             cbNumber.Items.Clear();
-            for(int i = 1; i<=(count-1);i++)
+            for (int i = 1; i <= (count - 1); i++)
             {
                 cbNumber.Items.Add(i);
             }
             strData.strQuestion = strData.strQuestion.Where((s, i) => i != prevIndex).ToArray();
-            strData.strChoice = strData.strQuestion.Where((s, i) => i != prevIndex).ToArray();
+            strData.strChoice = strData.strChoice.Where((s, i) => i != prevIndex).ToArray();
             strData.strAnswer[0] = strData.strAnswer[0].Where((s, i) => i != prevIndex).ToArray();
             strData.strAnswer[1] = strData.strAnswer[1].Where((s, i) => i != prevIndex).ToArray();
             strData.strAnswer[2] = strData.strAnswer[2].Where((s, i) => i != prevIndex).ToArray();
@@ -172,22 +191,46 @@ namespace Desktop_IDE
             {
                 MetroMessageBox.Show(this, "File has been saved", "Saved",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-                tbxFile.Text = otherFunctions.save.FileName;
-                
+                tbxFile.Text = otherFunctions.savefile;
+
             }
         }
         private void clickLoad(object sender, EventArgs e)
         {
-            if (otherFunctions.openFile())
+            if (otherFunctions.openQuestion())
             {
                 MetroMessageBox.Show(this, "File has been loaded", "Loaded",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                tbxFile.Text = otherFunctions.open.FileName;
                 
+
+                if (Max < 10)
+                {
+                    while (Max != cbNumber.Items.Count)
+                    {
+                        cbNumber.Items.RemoveAt(cbNumber.Items.Count - 1);
+                    }
+                }
+                else
+                {
+                    while ((Max != cbNumber.Items.Count) && (Max > 10))
+                    {
+                        cbNumber.Items.Add(cbNumber.Items.Count + 1);
+                    }
+                }
+
             }
-            
+
         }
+        private void clickServer(object sender, EventArgs e)
+        {
+
+            startserver.IsBackground = true;
+            startserver.Start();
+            butHotspot.Enabled = false;
+            butServer.Enabled = false;
+        }
+
         #endregion
 
         #region DLL Variable Declarations
@@ -238,7 +281,7 @@ namespace Desktop_IDE
         public bool A
         {
             get { return rbA.Checked; }
-            set{rbA.Checked = value;}
+            set { rbA.Checked = value; }
         }
         public bool B
         {
@@ -265,13 +308,105 @@ namespace Desktop_IDE
             get { return butNext.Enabled; }
             set { butNext.Enabled = value; }
         }
+        public int MAX
+        {
+            get { return Max; }
+            set { Max = value; }
+        }
         #endregion
 
+        private void atClose(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
 
+                startserver.Abort();
+                hotspot.exit();
+
+            }
+            catch (SocketException)
+            {
+                //nothing;
+            }
+            finally
+            {
+                Application.Exit();
+            }
+
+        }
+
+        private void selectClient(object sender, EventArgs e)
+        {
+
+            mpUser.Visible = true;
+            if (tcpserver.user.ContainsKey(lbxServer.SelectedItem.ToString()))
+            {
+                string query = "SELECT * FROM u614761466_mega.users WHERE RFID_tags='"
+                    + tcpserver.user[lbxServer.SelectedItem.ToString()] + "' ;";
+
+                MySqlConnection conn = mysqlCon.conn();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader reader;
+                try
+                {
+                    conn.Open();
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        lblId.Text = "ID number: " +  reader.GetInt32("studentnum").ToString();
+                        lblUser.Text = "User: " +  reader.GetString("FirstName") + " " 
+                            + reader.GetString("LastName");
+                        
+                    }
+                    reader.Close();
+                }
+                catch (Exception x)
+                {
+
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+
+        }
+
+        private void butLoadTest_Click(object sender, EventArgs e)
+        {
+            if (otherFunctions.openTest())
+            {
+                MetroMessageBox.Show(this, "File has been loaded", "Loaded",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                tbxFile.Text = otherFunctions.openfile;
+            }
+        }
+
+        private void clickCreate(object sender, EventArgs e)
+        {
+            createTest _crtTest = new createTest();
+            _crtTest.StyleManager = msmMain;
+
+            _crtTest.ShowDialog();
+            
+            _crtTest.Dispose();
+        }
 
         
 
 
-                        
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

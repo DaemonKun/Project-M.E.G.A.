@@ -61,6 +61,26 @@ namespace Desktop_IDE.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap circlegreen1 {
+            get {
+                object obj = ResourceManager.GetObject("circlegreen1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap circlered {
+            get {
+                object obj = ResourceManager.GetObject("circlered", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No clients to connect the server..
         /// </summary>
         internal static string ConnectionMsg {
