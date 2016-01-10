@@ -22,4 +22,8 @@ namespace Desktop_IDE
         
 
     }
+    public interface Test
+    {
+        int max { set; }
+    }
 }

@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 
 namespace Desktop_IDE
 {
-    static class Crpyt
+    public static class Crpyt
     {
         private static IMain main = strData.main;
         private static string password = "dasdsdsadwdsdscx";

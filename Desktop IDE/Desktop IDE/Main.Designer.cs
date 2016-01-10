@@ -30,10 +30,17 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.msmMain = new MetroFramework.Components.MetroStyleManager(this.components);
             this.chkTheme = new MetroFramework.Controls.MetroCheckBox();
             this.tabMenu = new MetroFramework.Controls.MetroTabControl();
             this.tabUser = new MetroFramework.Controls.MetroTabPage();
+            this.cmbExam = new MetroFramework.Controls.MetroComboBox();
+            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
+            this.cmbSubject = new MetroFramework.Controls.MetroComboBox();
+            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.butCreate = new MetroFramework.Controls.MetroButton();
             this.butLoadTest = new MetroFramework.Controls.MetroButton();
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
@@ -47,6 +54,8 @@
             this.lbxServer = new System.Windows.Forms.ListBox();
             this.tbxFile = new MetroFramework.Controls.MetroTextBox();
             this.tabQuestion = new MetroFramework.Controls.MetroTabPage();
+            this.lblMax = new MetroFramework.Controls.MetroLabel();
+            this.lbl = new MetroFramework.Controls.MetroLabel();
             this.butClear = new MetroFramework.Controls.MetroButton();
             this.butNext = new MetroFramework.Controls.MetroButton();
             this.butPrevious = new MetroFramework.Controls.MetroButton();
@@ -68,9 +77,11 @@
             this.cbNumber = new MetroFramework.Controls.MetroComboBox();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.tabUdb = new MetroFramework.Controls.MetroTabPage();
+            this.butexport = new MetroFramework.Controls.MetroButton();
             this.tabRegister = new MetroFramework.Controls.MetroTabPage();
             this.butHotspot = new MetroFramework.Controls.MetroButton();
             this.butServer = new MetroFramework.Controls.MetroButton();
+            this.dgUser = new MetroFramework.Controls.MetroGrid();
             ((System.ComponentModel.ISupportInitialize)(this.msmMain)).BeginInit();
             this.tabMenu.SuspendLayout();
             this.tabUser.SuspendLayout();
@@ -78,6 +89,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabQuestion.SuspendLayout();
             this.panelQuestion.SuspendLayout();
+            this.tabUdb.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgUser)).BeginInit();
             this.SuspendLayout();
             // 
             // msmMain
@@ -107,13 +120,18 @@
             this.tabMenu.Controls.Add(this.tabRegister);
             this.tabMenu.Location = new System.Drawing.Point(23, 55);
             this.tabMenu.Name = "tabMenu";
-            this.tabMenu.SelectedIndex = 1;
+            this.tabMenu.SelectedIndex = 2;
             this.tabMenu.Size = new System.Drawing.Size(696, 339);
             this.tabMenu.TabIndex = 1;
             this.tabMenu.UseSelectable = true;
+            this.tabMenu.SelectedIndexChanged += new System.EventHandler(this.changeMenu);
             // 
             // tabUser
             // 
+            this.tabUser.Controls.Add(this.cmbExam);
+            this.tabUser.Controls.Add(this.metroLabel3);
+            this.tabUser.Controls.Add(this.cmbSubject);
+            this.tabUser.Controls.Add(this.metroLabel2);
             this.tabUser.Controls.Add(this.butCreate);
             this.tabUser.Controls.Add(this.butLoadTest);
             this.tabUser.Controls.Add(this.metroLabel5);
@@ -131,6 +149,46 @@
             this.tabUser.VerticalScrollbarBarColor = true;
             this.tabUser.VerticalScrollbarHighlightOnWheel = false;
             this.tabUser.VerticalScrollbarSize = 10;
+            // 
+            // cmbExam
+            // 
+            this.cmbExam.FormattingEnabled = true;
+            this.cmbExam.ItemHeight = 23;
+            this.cmbExam.Location = new System.Drawing.Point(378, 50);
+            this.cmbExam.Name = "cmbExam";
+            this.cmbExam.Size = new System.Drawing.Size(307, 29);
+            this.cmbExam.TabIndex = 24;
+            this.cmbExam.UseSelectable = true;
+            this.cmbExam.SelectedIndexChanged += new System.EventHandler(this.cmbExam_SelectedIndexChanged);
+            // 
+            // metroLabel3
+            // 
+            this.metroLabel3.AutoSize = true;
+            this.metroLabel3.Location = new System.Drawing.Point(328, 60);
+            this.metroLabel3.Name = "metroLabel3";
+            this.metroLabel3.Size = new System.Drawing.Size(44, 19);
+            this.metroLabel3.TabIndex = 23;
+            this.metroLabel3.Text = "Exam:";
+            // 
+            // cmbSubject
+            // 
+            this.cmbSubject.FormattingEnabled = true;
+            this.cmbSubject.ItemHeight = 23;
+            this.cmbSubject.Location = new System.Drawing.Point(77, 50);
+            this.cmbSubject.Name = "cmbSubject";
+            this.cmbSubject.Size = new System.Drawing.Size(228, 29);
+            this.cmbSubject.TabIndex = 22;
+            this.cmbSubject.UseSelectable = true;
+            this.cmbSubject.SelectedIndexChanged += new System.EventHandler(this.cmbSubject_SelectedIndexChanged);
+            // 
+            // metroLabel2
+            // 
+            this.metroLabel2.AutoSize = true;
+            this.metroLabel2.Location = new System.Drawing.Point(3, 60);
+            this.metroLabel2.Name = "metroLabel2";
+            this.metroLabel2.Size = new System.Drawing.Size(54, 19);
+            this.metroLabel2.TabIndex = 21;
+            this.metroLabel2.Text = "Subject:";
             // 
             // butCreate
             // 
@@ -174,13 +232,14 @@
             this.mpUser.HorizontalScrollbarBarColor = true;
             this.mpUser.HorizontalScrollbarHighlightOnWheel = false;
             this.mpUser.HorizontalScrollbarSize = 10;
-            this.mpUser.Location = new System.Drawing.Point(328, 50);
+            this.mpUser.Location = new System.Drawing.Point(328, 89);
             this.mpUser.Name = "mpUser";
-            this.mpUser.Size = new System.Drawing.Size(359, 225);
+            this.mpUser.Size = new System.Drawing.Size(357, 186);
             this.mpUser.TabIndex = 5;
             this.mpUser.VerticalScrollbarBarColor = true;
             this.mpUser.VerticalScrollbarHighlightOnWheel = false;
             this.mpUser.VerticalScrollbarSize = 10;
+            this.mpUser.Visible = false;
             // 
             // lblId
             // 
@@ -213,7 +272,7 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(76, 181);
+            this.pictureBox1.Location = new System.Drawing.Point(76, 156);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(16, 16);
             this.pictureBox1.TabIndex = 5;
@@ -231,7 +290,7 @@
             // lblFinish
             // 
             this.lblFinish.AutoSize = true;
-            this.lblFinish.Location = new System.Drawing.Point(98, 181);
+            this.lblFinish.Location = new System.Drawing.Point(98, 153);
             this.lblFinish.Name = "lblFinish";
             this.lblFinish.Size = new System.Drawing.Size(93, 19);
             this.lblFinish.TabIndex = 2;
@@ -240,9 +299,9 @@
             // lbxServer
             // 
             this.lbxServer.FormattingEnabled = true;
-            this.lbxServer.Location = new System.Drawing.Point(3, 50);
+            this.lbxServer.Location = new System.Drawing.Point(3, 89);
             this.lbxServer.Name = "lbxServer";
-            this.lbxServer.Size = new System.Drawing.Size(302, 225);
+            this.lbxServer.Size = new System.Drawing.Size(302, 186);
             this.lbxServer.TabIndex = 4;
             this.lbxServer.SelectedIndexChanged += new System.EventHandler(this.selectClient);
             // 
@@ -278,6 +337,8 @@
             // 
             // tabQuestion
             // 
+            this.tabQuestion.Controls.Add(this.lblMax);
+            this.tabQuestion.Controls.Add(this.lbl);
             this.tabQuestion.Controls.Add(this.butClear);
             this.tabQuestion.Controls.Add(this.butNext);
             this.tabQuestion.Controls.Add(this.butPrevious);
@@ -299,6 +360,24 @@
             this.tabQuestion.VerticalScrollbarBarColor = true;
             this.tabQuestion.VerticalScrollbarHighlightOnWheel = false;
             this.tabQuestion.VerticalScrollbarSize = 10;
+            // 
+            // lblMax
+            // 
+            this.lblMax.AutoSize = true;
+            this.lblMax.Location = new System.Drawing.Point(80, 182);
+            this.lblMax.Name = "lblMax";
+            this.lblMax.Size = new System.Drawing.Size(16, 19);
+            this.lblMax.TabIndex = 13;
+            this.lblMax.Text = "0";
+            // 
+            // lbl
+            // 
+            this.lbl.AutoSize = true;
+            this.lbl.Location = new System.Drawing.Point(36, 163);
+            this.lbl.Name = "lbl";
+            this.lbl.Size = new System.Drawing.Size(112, 19);
+            this.lbl.TabIndex = 12;
+            this.lbl.Text = "Number of Items:";
             // 
             // butClear
             // 
@@ -639,6 +718,8 @@
             // 
             // tabUdb
             // 
+            this.tabUdb.Controls.Add(this.dgUser);
+            this.tabUdb.Controls.Add(this.butexport);
             this.tabUdb.HorizontalScrollbarBarColor = true;
             this.tabUdb.HorizontalScrollbarHighlightOnWheel = false;
             this.tabUdb.HorizontalScrollbarSize = 10;
@@ -650,6 +731,16 @@
             this.tabUdb.VerticalScrollbarBarColor = true;
             this.tabUdb.VerticalScrollbarHighlightOnWheel = false;
             this.tabUdb.VerticalScrollbarSize = 10;
+            // 
+            // butexport
+            // 
+            this.butexport.Location = new System.Drawing.Point(277, 261);
+            this.butexport.Name = "butexport";
+            this.butexport.Size = new System.Drawing.Size(128, 23);
+            this.butexport.TabIndex = 3;
+            this.butexport.Text = "Export to Excel";
+            this.butexport.UseSelectable = true;
+            this.butexport.Click += new System.EventHandler(this.clickExport);
             // 
             // tabRegister
             // 
@@ -689,6 +780,50 @@
             this.butServer.UseSelectable = true;
             this.butServer.Click += new System.EventHandler(this.clickServer);
             // 
+            // dgUser
+            // 
+            this.dgUser.AllowUserToResizeRows = false;
+            this.dgUser.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dgUser.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dgUser.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
+            this.dgUser.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgUser.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgUser.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgUser.EnableHeadersVisualStyles = false;
+            this.dgUser.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.dgUser.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dgUser.Location = new System.Drawing.Point(0, 3);
+            this.dgUser.Name = "dgUser";
+            this.dgUser.ReadOnly = true;
+            this.dgUser.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgUser.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgUser.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgUser.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgUser.Size = new System.Drawing.Size(688, 252);
+            this.dgUser.TabIndex = 4;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -716,6 +851,8 @@
             this.tabQuestion.PerformLayout();
             this.panelQuestion.ResumeLayout(false);
             this.panelQuestion.PerformLayout();
+            this.tabUdb.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgUser)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -748,7 +885,6 @@
         private MetroFramework.Controls.MetroTextBox txtC;
         private MetroFramework.Controls.MetroTextBox txtA;
         private MetroFramework.Controls.MetroTextBox txtQuestion;
-        private MetroFramework.Controls.MetroTextBox tbxFile;
         private System.Windows.Forms.ListBox lbxServer;
         public MetroFramework.Controls.MetroTabControl tabMenu;
         public MetroFramework.Controls.MetroTabPage tabRegister;
@@ -764,6 +900,15 @@
         private MetroFramework.Controls.MetroButton butLoadTest;
         private MetroFramework.Controls.MetroButton butCreate;
         public MetroFramework.Components.MetroStyleManager msmMain;
+        private MetroFramework.Controls.MetroLabel lblMax;
+        private MetroFramework.Controls.MetroLabel lbl;
+        public MetroFramework.Controls.MetroTextBox tbxFile;
+        private MetroFramework.Controls.MetroComboBox cmbExam;
+        private MetroFramework.Controls.MetroLabel metroLabel3;
+        private MetroFramework.Controls.MetroComboBox cmbSubject;
+        private MetroFramework.Controls.MetroLabel metroLabel2;
+        private MetroFramework.Controls.MetroButton butexport;
+        private MetroFramework.Controls.MetroGrid dgUser;
     }
 }
 

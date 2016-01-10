@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using MetroFramework;
-
 using System.Threading;
 using System.Net.Sockets;
 using System.Net;
 using MetroFramework.Controls;
 using MySql.Data.MySqlClient;
+using System.Reflection;
 
 namespace Desktop_IDE
 {
@@ -22,9 +22,6 @@ namespace Desktop_IDE
     {
         public static Thread startserver;
         private static int Max;
-
-
-
 
         public Main()
         {
@@ -40,7 +37,12 @@ namespace Desktop_IDE
             this.StyleManager = msmMain;
             tabMenu.SelectedTab = tabUser;
             butPrevious.Enabled = false;
-            tcpserver.file = this.tbxFile.Text;
+            fillcomboSubjects();
+            dgUser.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            dgUser.CellBorderStyle = DataGridViewCellBorderStyle.Single;
+            dgUser.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dgUser.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            
 
 
         }
@@ -58,6 +60,10 @@ namespace Desktop_IDE
                 msmMain.Theme = MetroFramework.MetroThemeStyle.Light;
 
             }
+            dgUser.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            dgUser.CellBorderStyle = DataGridViewCellBorderStyle.Single;
+            dgUser.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dgUser.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
         }
         private void changeNum(object sender, EventArgs e)
         {
@@ -67,7 +73,6 @@ namespace Desktop_IDE
             strData.dispQuestion();
             otherFunctions.enableDisablePrevNext();
         }
-
         public void AddClient(IPEndPoint IpEndPoint)
         {
 
@@ -100,7 +105,10 @@ namespace Desktop_IDE
             {
                 MetroMessageBox.Show(this, ex.Message);
             }
-
+            finally
+            {
+                lblMax.Text = cbNumber.Items.Count.ToString();
+            }
         }
         private void clickNext(object sender, EventArgs e)
         {
@@ -126,15 +134,26 @@ namespace Desktop_IDE
             {
                 MetroMessageBox.Show(this, ex.Message);
             }
+            finally
+            {
+                lblMax.Text = cbNumber.Items.Count.ToString();
+            }
         }
         private void clickAdd(object sender, EventArgs e)
         {
             int count = cbNumber.Items.Count;
             cbNumber.Items.Add(cbNumber.Items.Count + 1);
+            strData.strQuestion.Add(null);
+            strData.strChoice.Add(null);
+            strData.strA.Add(null);
+            strData.strB.Add(null);
+            strData.strC.Add(null);
+            strData.strD.Add(null);
             if (count == cbNumber.SelectedIndex + 1)
             {
                 cbNumber.SelectedIndex = cbNumber.Items.Count - 1;
             }
+            lblMax.Text = cbNumber.Items.Count.ToString();
         }
         private void clickDelete(object sender, EventArgs e)
         {
@@ -157,19 +176,19 @@ namespace Desktop_IDE
             {
                 cbNumber.Items.Add(i);
             }
-            strData.strQuestion = strData.strQuestion.Where((s, i) => i != prevIndex).ToArray();
-            strData.strChoice = strData.strChoice.Where((s, i) => i != prevIndex).ToArray();
-            strData.strAnswer[0] = strData.strAnswer[0].Where((s, i) => i != prevIndex).ToArray();
-            strData.strAnswer[1] = strData.strAnswer[1].Where((s, i) => i != prevIndex).ToArray();
-            strData.strAnswer[2] = strData.strAnswer[2].Where((s, i) => i != prevIndex).ToArray();
-            strData.strAnswer[3] = strData.strAnswer[3].Where((s, i) => i != prevIndex).ToArray();
+            strData.strQuestion.RemoveAt(prevIndex);
+            strData.strChoice.RemoveAt(prevIndex);
+            strData.strA.RemoveAt(prevIndex);
+            strData.strB.RemoveAt(prevIndex);
+            strData.strC.RemoveAt(prevIndex);
+            strData.strD.RemoveAt(prevIndex);
             if ((prevIndex != 0) && (prevIndex != prevLastIndex))
                 cbNumber.SelectedIndex = prevIndex;
             else if (prevIndex == prevLastIndex)
                 cbNumber.SelectedIndex = prevIndex - 1;
             else
                 cbNumber.SelectedIndex = 0;
-
+            lblMax.Text = cbNumber.Items.Count.ToString();
         }
         private void clickClear(object sender, EventArgs e)
         {
@@ -187,11 +206,20 @@ namespace Desktop_IDE
         }
         private void clickSave(object sender, EventArgs e)
         {
+            if (!string.IsNullOrWhiteSpace(Question) || !string.IsNullOrWhiteSpace(AnswerA) ||
+                    !string.IsNullOrWhiteSpace(AnswerB) || !string.IsNullOrWhiteSpace(AnswerC) ||
+                    !string.IsNullOrWhiteSpace(AnswerD))
+            {
+                strData.getQuestion();
+                strData.getAnswer();
+            }
+                
+            
             if (otherFunctions.saveFile())
             {
                 MetroMessageBox.Show(this, "File has been saved", "Saved",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-                tbxFile.Text = otherFunctions.savefile;
+                
 
             }
         }
@@ -202,22 +230,17 @@ namespace Desktop_IDE
                 MetroMessageBox.Show(this, "File has been loaded", "Loaded",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                
 
-                if (Max < 10)
+                lblMax.Text = Max.ToString();
+                cbNumber.Items.Clear();
+                while (Max != cbNumber.Items.Count)
                 {
-                    while (Max != cbNumber.Items.Count)
-                    {
-                        cbNumber.Items.RemoveAt(cbNumber.Items.Count - 1);
-                    }
+                    cbNumber.Items.Add(cbNumber.Items.Count + 1);
                 }
-                else
-                {
-                    while ((Max != cbNumber.Items.Count) && (Max > 10))
-                    {
-                        cbNumber.Items.Add(cbNumber.Items.Count + 1);
-                    }
-                }
+                cbNumber.SelectedIndex = 0;
+                strData.dispAnswer();
+                strData.dispQuestion();
+                otherFunctions.enableDisablePrevNext();
 
             }
 
@@ -330,7 +353,7 @@ namespace Desktop_IDE
             }
             finally
             {
-                Application.Exit();
+                System.Windows.Forms.Application.Exit();
             }
 
         }
@@ -361,7 +384,7 @@ namespace Desktop_IDE
                     }
                     reader.Close();
                 }
-                catch (Exception x)
+                catch (Exception)
                 {
 
                 }
@@ -381,23 +404,205 @@ namespace Desktop_IDE
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 tbxFile.Text = otherFunctions.openfile;
             }
+            
         }
 
         private void clickCreate(object sender, EventArgs e)
         {
             createTest _crtTest = new createTest();
-            _crtTest.StyleManager = msmMain;
+
 
             _crtTest.ShowDialog();
-            
             _crtTest.Dispose();
+            
+            
         }
 
-        
+        void fillcomboExam()
+        {
+            DataTable schema = null;
+            using (var con = mysqlCon.conn())
+            {
+                using (var schemaCommand = new MySql.Data.MySqlClient.MySqlCommand("SELECT * FROM u614761466_mega."
+                    + cmbSubject.SelectedItem.ToString() + ";", con))
+                {
+                    con.Open();
+                    using (var reader = schemaCommand.ExecuteReader(CommandBehavior.SchemaOnly))
+                    {
+                        schema = reader.GetSchemaTable();
+                    }
+                }
+            }
+            foreach (DataRow col in schema.Rows)
+            {
+                if (col.Field<string>("ColumnName").Contains("Quiz")||col.Field<string>("ColumnName").Contains("ME")||
+                    col.Field<string>("ColumnName").Contains("FE"))
+                    cmbExam.Items.Add(col.Field<string>("ColumnName"));
+            }
+            
+        }
+        void fillcomboSubjects()
+        {
+            string query = "SELECT * FROM u614761466_mega.SubjectEnrolled;";
+            var con = mysqlCon.conn();
+            var cmd = new MySqlCommand(query, con);
+            MySqlDataReader reader;
+            try
+            {
+                con.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    if (!cmbSubject.Items.Contains(reader.GetString("Subject1")))
+                        cmbSubject.Items.Add(reader.GetString("Subject1"));
+                    else if (!cmbSubject.Items.Contains(reader.GetString("Subject2")))
+                        cmbSubject.Items.Add(reader.GetString("Subject2"));
+                    else if (!cmbSubject.Items.Contains(reader.GetString("Subject3")))
+                        cmbSubject.Items.Add(reader.GetString("Subject3"));
+                    else if (!cmbSubject.Items.Contains(reader.GetString("Subject4")))
+                        cmbSubject.Items.Add(reader.GetString("Subject4"));
+                }
+                reader.Close();
+            }
+            catch(Exception)
+            {
+                
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
+
+        private void cmbSubject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cmbExam.Items.Clear();
+            fillcomboExam();
+            lblSubject.Text = "Subject: " + cmbSubject.SelectedItem.ToString();
+            tcpserver.subject = cmbSubject.SelectedItem.ToString();
+            updateDG();
+        }
+
+        private void cmbExam_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblExam.Text = "Exam: " + cmbExam.SelectedItem.ToString();
+            tcpserver.exam = cmbSubject.SelectedItem.ToString();
+        }
+
+        private void changeMenu(object sender, EventArgs e)
+        {
+            
+        }
+
+
+        private void ExportToExcel(DataGridView dgView)
+        {
+            Microsoft.Office.Interop.Excel.Application excelApp = null;
+            try
+            {
+                // instantiating the excel application class
+                excelApp = new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel.Workbook currentWorkbook = excelApp.Workbooks.Add(Type.Missing);
+                Microsoft.Office.Interop.Excel.Worksheet currentWorksheet = (Microsoft.Office.Interop.Excel.Worksheet)currentWorkbook.ActiveSheet;
+                currentWorksheet.Columns.ColumnWidth = 18;
+
+
+                if (dgView.Rows.Count > 0)
+                {
+                    currentWorksheet.Cells[1, 1] = cmbSubject.SelectedItem.ToString();
+                    int i = 1;
+                    foreach (DataGridViewColumn dgviewColumn in dgView.Columns)
+                    {
+                        // Excel work sheet indexing starts with 1
+                        currentWorksheet.Cells[2, i] = dgviewColumn.Name;
+                        ++i;
+                    }
+                    Microsoft.Office.Interop.Excel.Range headerColumnRange = currentWorksheet.get_Range("A2", "T2");
+                    headerColumnRange.Font.Bold = true;
+                    headerColumnRange.Font.Color = 0xFF0000;
+                    //headerColumnRange.EntireColumn.AutoFit();
+                    int rowIndex = 0;
+                    for (rowIndex = 0; rowIndex < dgView.Rows.Count; rowIndex++)
+                    {
+                        DataGridViewRow dgRow = dgView.Rows[rowIndex];
+                        for (int cellIndex = 0; cellIndex < dgRow.Cells.Count; cellIndex++)
+                        {
+                            currentWorksheet.Cells[rowIndex + 3, cellIndex + 1] = dgRow.Cells[cellIndex].Value;
+                        }
+                    }
+                    Microsoft.Office.Interop.Excel.Range fullTextRange = currentWorksheet.get_Range("A1", "G" + (rowIndex + 1).ToString());
+                    fullTextRange.WrapText = true;
+                    fullTextRange.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                }
+                else
+                {
+                    currentWorksheet.Cells[1, 1] = tcpserver.subject;
+                    
+                }
+                
+                using (SaveFileDialog exportSaveFileDialog = new SaveFileDialog())
+                {
+                    exportSaveFileDialog.Title = "Select Excel File";
+                    exportSaveFileDialog.Filter = "Microsoft Office Excel Workbook(*.xlsx)|*.xlsx";
+
+                    if (DialogResult.OK == exportSaveFileDialog.ShowDialog())
+                    {
+                        string fullFileName = exportSaveFileDialog.FileName;
+                        // currentWorkbook.SaveCopyAs(fullFileName);
+                        // indicating that we already saved the workbook, otherwise call to Quit() will pop up
+                        // the save file dialogue box
+
+                        currentWorkbook.SaveAs(fullFileName, Microsoft.Office.Interop.Excel.XlFileFormat.xlOpenXMLWorkbook, System.Reflection.Missing.Value, Missing.Value, false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange, Microsoft.Office.Interop.Excel.XlSaveConflictResolution.xlUserResolution, true, Missing.Value, Missing.Value, Missing.Value);
+                        currentWorkbook.Saved = true;
+                        MetroMessageBox.Show(this,"Database exported successfully", "Exported to Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MetroMessageBox.Show(this, ex.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (excelApp != null)
+                {
+                    excelApp.Quit();
+                }
+            }
 
 
 
+        }
 
+        private void clickExport(object sender, EventArgs e)
+        {
+            ExportToExcel(dgUser);
+        }
+        private void updateDG()
+        {
+            if ((cmbSubject.SelectedItem != null))
+            {
+                string query = "SELECT * FROM u614761466_mega." + tcpserver.subject + " ;";
+                using (var con = mysqlCon.conn())
+                {
+                    using (var cmd = new MySqlCommand(query, con))
+                    {
+                        using (var sda = new MySqlDataAdapter())
+                        {
+                            sda.SelectCommand = cmd;
+                            DataTable dataset = new DataTable();
+                            sda.Fill(dataset);
+                            BindingSource bsource = new BindingSource();
+                            bsource.DataSource = dataset;
+                            dgUser.DataSource = bsource;
+                            sda.Update(dataset);
+
+                        }
+                    }
+                }
+            }
+        }
 
 
 

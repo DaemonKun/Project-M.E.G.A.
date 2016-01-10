@@ -14,6 +14,7 @@ namespace Desktop_IDE
     {
 
         private static IMain main = strData.main;
+        public static Test test;
         public static string savefile = string.Empty;
         public static string openfile = string.Empty;
         public static string tmpTest = string.Empty;
@@ -21,14 +22,14 @@ namespace Desktop_IDE
         {
             try
             {
-                if (main.Index == 0)
+                if ((main.Index == 0) && (main.Count == 1))
                 {
                     main.StatusPrev = false;
-                    main.StatusNext = true;
-                }
-                else if (main.Index == 1)
-                {
                     main.StatusNext = false;
+                }
+                else if ((main.Index == 0))
+                {
+                    main.StatusNext = true;
                     main.StatusPrev = false;
                 }
                 else if (main.Index == (main.Count - 1))
@@ -58,9 +59,10 @@ namespace Desktop_IDE
             {
                 if ((open.FileName != "") && (open.FileName.Contains(".mgt")))
                 {
+                    testData.clearItems();
                     tmpTest = TmpFile();
                     Crpyt.decrpyt(open.FileName, tmpTest);
-                    ReadTmpFile(tmpTest);
+                    ReadTestData(tmpTest);
                     openfile = open.FileName;
                     return true;
                 }
@@ -78,18 +80,44 @@ namespace Desktop_IDE
                 Filter = "MEGA question file|*.mgq",
                 Title = "Select test file"
             };
-            if (!open.FileName.Equals(""))
+            open.ShowDialog();
+            if ((open.FileName != "")&&(open.FileName.EndsWith(".mgq")))
             {
                 string temp = TmpFile();
                 Crpyt.decrpyt(open.FileName, temp);
+                strData.clearItems();
                 ReadTmpFile(temp);
-                strData.dispAnswer();
-                strData.dispQuestion();
+                
                 DeleteTmpFile(temp);
                 return true;
             }
             else
                 return false;
+        }
+        public static bool LoadQuestions()
+        {
+            OpenFileDialog open = new OpenFileDialog()
+            {
+                Filter = "MEGA question file|*.mgq",
+                Title = "Select question file(s)",
+                Multiselect = true
+            };
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                strData.clearItems();
+                foreach (string file in open.FileNames)
+                {
+                    string temp = TmpFile();
+                    Crpyt.decrpyt(file, temp);
+                    ReadTmpFile(temp);
+                    DeleteTmpFile(temp);
+                }
+                test.max = strData.strQuestion.Count;
+                return true;
+            }
+            else
+                return false;
+            
         }
         public static bool saveFile()
         {
@@ -99,8 +127,7 @@ namespace Desktop_IDE
                 Filter = "MEGA questions|*.mgq",
                 Title = "Save Question File"
             };
-            strData.getAnswer();
-            strData.getQuestion();
+            
             save.ShowDialog();
             if (save.FileName != "")
             {
@@ -150,17 +177,99 @@ namespace Desktop_IDE
         public static void WriteQuestions(string filename)
         {
             StreamWriter sw = new StreamWriter(filename);
-            
-            
-            sw.Close();
+            strData.deleteNull();
+
+            for (int i = 0; i < strData.strQuestion.Count; i++)
+            {
+                sw.WriteLine("<" + (i + 1).ToString() + "><Q>:" + strData.strQuestion[i]);
+                sw.WriteLine("<" + (i + 1).ToString() + "><A>:" + strData.strA[i]);
+                sw.WriteLine("<" + (i + 1).ToString() + "><B>:" + strData.strB[i]);
+                sw.WriteLine("<" + (i + 1).ToString() + "><C>:" + strData.strC[i]);
+                sw.WriteLine("<" + (i + 1).ToString() + "><D>:" + strData.strD[i]);
+                sw.WriteLine("<" + (i + 1).ToString() + "><Answer>:" + strData.strChoice[i]);
+            }
+                sw.Close();
         }
         public static void ReadTmpFile(string tmpfile)
         {
             
             string[] result = File.ReadAllLines(tmpfile);
+            for (int i = 0; i < 1024; i++)
+            {
+                for (int j = 0; j < result.Length; j++ )
+                {
+                    if (result[j].Contains((i + 1).ToString()))
+                    {
+                        if (result[j].Contains("<Q>"))
+                        {
+                            strData.strQuestion.Add(result[j].Remove(0, result[j].IndexOf(":") + 1));
+                        }
+                        else if (result[j].Contains("<A>"))
+                        {
+                            strData.strA.Add(result[j].Remove(0, result[j].IndexOf(":") + 1));
+                        }
+                        else if (result[j].Contains("<B>"))
+                        {
+                            strData.strB.Add(result[j].Remove(0, result[j].IndexOf(":") + 1));
+                        }
+                        else if (result[j].Contains("<C>"))
+                        {
+                            strData.strC.Add(result[j].Remove(0, result[j].IndexOf(":") + 1));
+                        }
+                        else if (result[j].Contains("<D>"))
+                        {
+                            strData.strD.Add(result[j].Remove(0, result[j].IndexOf(":") + 1));
+                        }
+                        else if (result[j].Contains("<Answer>"))
+                        {
+                            strData.strChoice.Add(result[j].Remove(0, result[j].IndexOf(":") + 1));
+                        }
+                    }
+                }
+                
+            }
+            main.MAX = strData.strQuestion.Count;
 
         }
+        public static void ReadTestData(string tmpfile)
+        {
+            string[] result = File.ReadAllLines(tmpfile);
+            for (int i = 0; i < 1024; i++)
+            {
+                for (int j = 0; j < result.Length; j++)
+                {
+                    if (result[j].Contains((i + 1).ToString()))
+                    {
+                        if (result[j].Contains("<Q>"))
+                        {
+                            testData.strQuestion.Add(result[j].Remove(0, result[j].IndexOf(":") + 1));
+                        }
+                        else if (result[j].Contains("<A>"))
+                        {
+                            testData.strA.Add(result[j].Remove(0, result[j].IndexOf(":") + 1));
+                        }
+                        else if (result[j].Contains("<B>"))
+                        {
+                            testData.strB.Add(result[j].Remove(0, result[j].IndexOf(":") + 1));
+                        }
+                        else if (result[j].Contains("<C>"))
+                        {
+                            testData.strC.Add(result[j].Remove(0, result[j].IndexOf(":") + 1));
+                        }
+                        else if (result[j].Contains("<D>"))
+                        {
+                            testData.strD.Add(result[j].Remove(0, result[j].IndexOf(":") + 1));
+                        }
+                        else if (result[j].Contains("<Answer>"))
+                        {
+                            testData.strChoice.Add(result[j].Remove(0, result[j].IndexOf(":") + 1));
+                        }
+                    }
+                }
 
+            }
+            
+        }
         public static int checkAnswers(string tmpfile)
         {
             int score = 0;
@@ -173,7 +282,7 @@ namespace Desktop_IDE
                 {
 
                     result[i] = result[i].Remove(0, result[i].IndexOf(":") + 1);
-                    if (strData.strChoice[i-1].Equals(result[i]))
+                    if (testData.strChoice[i-1].Equals(result[i]))
                     {
                         score++;
                     }

@@ -139,6 +139,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(742, 442);
             this.Controls.Add(this.panelLogin);
+            this.MaximizeBox = false;
             this.Name = "Start";
             this.Text = "Project M.E.G.A.";
             this.panelLogin.ResumeLayout(false);

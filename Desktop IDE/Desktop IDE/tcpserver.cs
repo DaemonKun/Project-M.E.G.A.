@@ -23,8 +23,9 @@ namespace Desktop_IDE
         private delegate void AddClientHandler(IPEndPoint IpEndPoint);
         private delegate void EnableSendHandler();
         public static Main Server { get; set; }
+        public static string subject { get; set; }
+        public static string exam { get; set; }
         public static IMain main;
-        public static string file { get; set; }
         public static int score;
         private static byte[] _buffer = new byte[c_bufferSize];
         private static Socket _serverSocket = new Socket
@@ -84,51 +85,26 @@ namespace Desktop_IDE
                     #region veeeeeeeeeery loooooooooong loooooooop
                     int i = 0;
                     string temp = string.Empty;
-                    for (; i < strData.strQuestion.Length; i++)
+                    for (; i < testData.strQuestion.Count; i++)
                     {
-                        if (string.IsNullOrEmpty(strData.strQuestion[i]))
+                        if (string.IsNullOrEmpty(testData.strQuestion[i]))
                         {
                             break;
                         }
                         else
-                            temp += "<" + (i + 1).ToString() + ">" + "<Q>:" + strData.strQuestion[i] + "\n";
-
-                        for (int j = 0; j < 4; j++)
                         {
-                            if (j == 0)
-                            {
-                                temp += "<" + (i + 1).ToString() + ">" + "<A>:";
-                            }
-                            else if (j == 1)
-                            {
-                                temp += "<" + (i + 1).ToString() + ">" + "<B>:";
-
-                            }
-                            else if (j == 2)
-                            {
-                                temp += "<" + (i + 1).ToString() + ">" + "<C>:";
-                            }
-                            else if (j == 3)
-                            {
-                                temp += "<" + (i + 1).ToString() + ">" + "<D>:";
-                            }
-                            temp += strData.strAnswer[j][i] + "\n";
+                            temp += "<" + (i + 1).ToString() + ">" + "<Q>:" + testData.strQuestion[i] + "\n";
+                            temp += "<" + (i + 1).ToString() + ">" + "<A>:" + testData.strA[i] + "\n";
+                            temp += "<" + (i + 1).ToString() + ">" + "<B>:" + testData.strB[i] + "\n";
+                            temp += "<" + (i + 1).ToString() + ">" + "<C>:" + testData.strC[i] + "\n";
+                            temp += "<" + (i + 1).ToString() + ">" + "<D>:" + testData.strD[i] + "\n";
                         }
+                            
                     }
                     response = i.ToString() + "\n" + temp;
                     #endregion
-
-
                 }
-                else if (text.ToLower() == "if loaded")
-                {
-                    if (!string.IsNullOrWhiteSpace(file))
-                    {
-                        response = "loaded";
-                    }
-                    else
-                        response = "not loaded";
-                }
+                
                 else if (text.Contains("RFID:"))
                 {
                     string RFID = text.Substring(text.IndexOf(':') + 1, 12);
@@ -181,6 +157,8 @@ namespace Desktop_IDE
                     sw.Write(text);
                     sw.Close();
                     score = otherFunctions.checkAnswers(filename);
+                    otherFunctions.DeleteTmpFile(filename);
+                    addScore(ip.ToString());
                     
                     
                 }
@@ -214,6 +192,46 @@ namespace Desktop_IDE
 
             //}
             socket.EndSend(AR);
+        }
+
+        private static void addScore(string ip)
+        {
+            string query = "SELECT * FROM u614761466_mega.users WHERE RFID_tag='" + user[ip] + "' ;";
+            string studentnum = string.Empty;
+            string query2 = "UPDATE u614761466_mega." + subject + "SET" + exam + "='"+score.ToString()
+                +"' WHERE studentnum='" + studentnum +"'  ;";
+
+            using (var con = mysqlCon.conn())
+            {
+                using (var cmd = new MySqlCommand(query, con))
+                {
+                    con.Open();
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            studentnum = reader.GetString("studentnum");
+                        }
+                        reader.Close();
+                    }
+                    con.Close();
+                }
+                using (var cmd2 = new MySqlCommand(query2, con))
+                {
+                    con.Open();
+                    using (var reader = cmd2.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+
+                        }
+                        reader.Close();
+                    }
+                    con.Close();
+                }
+            }
+
+
         }
         
     }

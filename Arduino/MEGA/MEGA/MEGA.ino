@@ -186,7 +186,7 @@ void startup(){
 	}
   LCD.print(F("                      "), CENTER, texty_center);
 	LCD.print(F("Connected!"), CENTER, texty_center);
-	/*delay(1000);
+	delay(1000);
 	LCD.print(F("                      "), CENTER, texty_center);
 	LCD.print(F("Scanning for ID..."), CENTER, texty_center);
 	while (!initializeRFID()){
@@ -199,7 +199,7 @@ void startup(){
 	}
   delay(1000);
 	LCD.print(F("                              "), CENTER, texty_center);
-	LCD.print(F("Valid!"), CENTER, texty_center);*/
+	LCD.print(F("Valid!"), CENTER, texty_center);
   delay(1000);
 	LCD.print(F("                              "), CENTER, texty_center);
 	LCD.print(F("Downloading the question file..."), CENTER, texty_center);
